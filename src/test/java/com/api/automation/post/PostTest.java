@@ -1,6 +1,6 @@
 package com.api.automation.post;
 
-import com.api.automation.BaseSet;
+import com.api.automation.BaseTest;
 import com.api.automation.client.RestClient;
 import com.api.automation.dataprovider.PostDataProvider;
 import com.api.automation.model.Post;
@@ -17,7 +17,7 @@ import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(classes = RestClient.class)
-public class PostTest extends BaseSet {
+public class PostTest extends BaseTest {
     private static final String PATH_TO_POSTS = getConfigValue("post_path").toString();
 
     @Test
