@@ -1,4 +1,4 @@
-package com.rest_assured.pojo;
+package com.api.automation.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,15 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
-    @JsonProperty("postId")
-    private Integer postId;
+public class Post {
+    @JsonProperty("userId")
+    private Integer userId;
     @JsonProperty("id")
     private Integer id;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("title")
+    private String title;
     @JsonProperty("body")
     private String body;
 }
