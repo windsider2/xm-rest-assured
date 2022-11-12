@@ -5,6 +5,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 
+import static java.lang.String.*;
 import static org.apache.http.HttpStatus.*;
 
 public class PostDataProvider {
@@ -31,21 +32,31 @@ public class PostDataProvider {
                 body = "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto";
         final Post expectedPost = buildPost(userId, postId, title, body);
         return new Object[][]{
-                {SC_OK, expectedPost},
+                {postId, SC_OK, expectedPost},
         };
     }
 
     @org.testng.annotations.DataProvider(name = "postBodyProvider")
     public static Object[][] postBodyProvider() {
         final int userId = 20, postId = 121;
-        final String title = "Post id 101", body = "Text for body";
-        final Post expectedPost = buildPost(userId, postId, title, body);
-        final String bodyToPost = generateSerializedPost(expectedPost),
-                expectedBody = "{\"id\":101}",
-                emptyBody = "{}";
+        final String title = "Post id 101", body = "Text for body", expectedBody = "{\"id\":101}", emptyBody = "{}";
+        final Post bodyToPost = buildPost(userId, postId, title, body);
         return new Object[][]{
                 {"", bodyToPost, SC_CREATED, expectedBody},
                 {"/1", bodyToPost, SC_NOT_FOUND, emptyBody}
+        };
+    }
+
+    @org.testng.annotations.DataProvider(name = "putBodyProvider")
+    public static Object[][] putBodyProvider() {
+        final int userId = 1, postId = 1, notExistingPostId = 999;
+        final String title = "Put id 1", body = "Text for body",
+                expectedBody = format("\"id\": %s", userId),
+                errorBody = "TypeError: Cannot read properties of undefined (reading 'id')";
+        final String bodyToPost = generateSerializedPost(buildPost(userId, postId, title, body));
+        return new Object[][]{
+                {postId, bodyToPost, SC_OK, expectedBody},
+                {notExistingPostId, bodyToPost, SC_INTERNAL_SERVER_ERROR, errorBody}
 
         };
     }
@@ -59,7 +70,7 @@ public class PostDataProvider {
                 .build();
     }
 
-    private static String generateSerializedPost(Post post) {
+    public static String generateSerializedPost(Post post) {
         try {
             return new ObjectMapper().writeValueAsString(post);
         } catch (IOException e) {
