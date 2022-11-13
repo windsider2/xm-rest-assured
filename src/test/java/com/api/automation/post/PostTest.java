@@ -13,7 +13,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.stream.IntStream;
 
-import static com.api.automation.dataprovider.PostDataProvider.*;
 import static com.api.automation.utils.ConfigSetter.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static java.time.format.DateTimeFormatter.*;
@@ -64,28 +63,26 @@ public class PostTest extends BaseTest {
 
     @Test(dataProvider = "postProviderForIdempotence", dataProviderClass = PostDataProvider.class)
     public void verifyIdempotenceTest(int postId, int statusCode, Post expectedPost) {
-        //the test verifies there is no state change in the system (idempotence) after some the same requests
+        //the test verifies there is no state change in the server (idempotence) after some the same requests
         final int numberOfRequests = 2;
         executeNumberOfGetRequestsAndVerifyResponseData(numberOfRequests, postId, statusCode, expectedPost);
     }
 
     @Test(dataProvider = "postBodyProvider", dataProviderClass = PostDataProvider.class)
-    public void postPostObjectTest(String path, Post bodyToPost, int statusCode, String expectedResponseBody) {
+    public void postPostObjectTest(int postId, String bodyToPost, int statusCode, String expectedResponseBody) {
         //the test verifies status code and returned body after executing post request
-        //in negative case wrong path is used
-        //the test fails after get request of the updated resource as application under test does not allow to create objects
-        final int postId = bodyToPost.getId();
-        final String expectedBody = generateSerializedPost(bodyToPost);
+        //in negative case invalid payload is sent - the server returns 201 code, however it should return 400 - bad request
         final String response = restClient
                 .buildRequest()
-                .body(expectedBody)
-                .post(PATH_TO_POSTS + path)
+                .body(bodyToPost)
+                .post(PATH_TO_POSTS)
                 .then()
                 .assertThat()
                 .statusCode(statusCode)
                 .extract().asPrettyString();
         Assert.assertEquals(response.replaceAll("\\s", ""), expectedResponseBody);
-        //for positive test verification of created resource with get request
+        //for positive test verification of created resource with get request is used
+        //the test fails after get request to the created resource as application under test does not allow to create resources
         if (statusCode == SC_CREATED) {
             final String actualResponseBody = restClient.buildRequest()
                     .get(PATH_TO_POSTS + POST_ID_FORMATTER, postId)
@@ -94,7 +91,7 @@ public class PostTest extends BaseTest {
                     .statusCode(SC_OK)
                     .extract()
                     .asPrettyString();
-            Assert.assertEquals(actualResponseBody.replaceAll("\\s", ""), expectedBody, "Returned body after post request does not match the expected");
+            Assert.assertEquals(actualResponseBody.replaceAll("\\s", ""), bodyToPost, "Returned body after post request does not match the expected");
         }
     }
 
@@ -127,7 +124,7 @@ public class PostTest extends BaseTest {
 
     @Test
     public void patchPostObjectTest() {
-        //the test verifies status code and returned body after executing put request
+        //the test verifies status code and returned body after executing patch request
         //in negative case not existing post id is used
         //the test fails as application under test does not allow to update resources
         final int postId = 1;
@@ -143,9 +140,9 @@ public class PostTest extends BaseTest {
 
     @Test
     public void deletePostObjectTest() {
-        //the test verifies status code and returned body after executing put request
+        //the test verifies status code and returned body after executing delete request
         //in negative case not existing post id is used
-        //the test fails as application under test does not allow to update resources
+        //the test fails as application under test does not allow to delete resources
         final int postId = 1;
         final String response = restClient
                 .buildRequest()
@@ -156,12 +153,10 @@ public class PostTest extends BaseTest {
                 .extract().asString();
 
         Assert.assertEquals(response, "{}", "Response body after delete request does not match the expected");
-
-
     }
 
     @Test
-    public void verifyGetPostResponseTimeTest() {
+    public void verifyGetResponseTimeTest() {
         //the test verifies status code and response time of last post
         final long size = restClient.buildRequest()
                 .get(PATH_TO_POSTS)
@@ -192,10 +187,14 @@ public class PostTest extends BaseTest {
         final String expectedDate = ZonedDateTime.now(ZoneId.of("GMT")).truncatedTo(SECONDS).format(RFC_1123_DATE_TIME);
         final String actualContentType = headers.get("Content-Type").getValue();
         final String actualConnection = headers.get("Connection").getValue();
+        final String actualExpires = headers.get("Expires").getValue();
+        final String actualCacheControl = headers.get("Cache-Control").getValue();
         SoftAssert soft = new SoftAssert();
         soft.assertEquals(actualDate, expectedDate, "Date header value does not match the expected");
         soft.assertEquals(actualContentType, "application/json; charset=utf-8", "Content Header type value does not match the expected");
         soft.assertEquals(actualConnection, "keep-alive", "Connection Header value does not match the expected");
+        soft.assertEquals(actualExpires, "-1", "Expires Header value does not match the expected");
+        soft.assertEquals(actualCacheControl, "max-age=43200", "Cache-Control Header value does not match the expected");
         soft.assertAll();
     }
 

@@ -40,10 +40,11 @@ public class PostDataProvider {
     public static Object[][] postBodyProvider() {
         final int userId = 20, postId = 121;
         final String title = "Post id 101", body = "Text for body", expectedBody = "{\"id\":101}", emptyBody = "{}";
-        final Post bodyToPost = buildPost(userId, postId, title, body);
+        final String bodyToPost = generateSerializedPost(buildPost(userId, postId, title, body));
+        final String invalidBodyToPost = "{\"user\":\"20\",\"id\":121,\"title\":\"Post id 121\",\"body\":\"Text for body\"}";
         return new Object[][]{
-                {"", bodyToPost, SC_CREATED, expectedBody},
-                {"/1", bodyToPost, SC_NOT_FOUND, emptyBody}
+                {postId, bodyToPost, SC_CREATED, expectedBody},
+                {postId, invalidBodyToPost, SC_BAD_REQUEST, emptyBody}
         };
     }
 
