@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
-<suite name="Comments" verbose="1" parallel="methods" thread-count="5">
-    <test name="Comments" >
+<suite name="Comment" verbose="1" parallel="methods" thread-count="5">
+    <test name="Comment" >
         <classes>
             <class name="com.api.automation.comments.CommentTest" />
         </classes>
