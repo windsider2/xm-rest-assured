@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.stream.IntStream;
@@ -183,12 +184,14 @@ public class PostTest extends BaseTest {
                 .assertThat()
                 .statusCode(SC_OK)
                 .extract().headers();
-        final String actualDate = headers.get("Date").getValue();
-        final String expectedDate = ZonedDateTime.now(ZoneId.of("GMT")).truncatedTo(SECONDS).format(RFC_1123_DATE_TIME);
+
+        final LocalDateTime actualDate = LocalDateTime.parse(headers.get("Date").getValue(), RFC_1123_DATE_TIME).truncatedTo(MINUTES);
+        final LocalDateTime expectedDate = ZonedDateTime.now(ZoneId.of("GMT")).truncatedTo(MINUTES).toLocalDateTime();
         final String actualContentType = headers.get("Content-Type").getValue();
         final String actualConnection = headers.get("Connection").getValue();
         final String actualExpires = headers.get("Expires").getValue();
         final String actualCacheControl = headers.get("Cache-Control").getValue();
+
         SoftAssert soft = new SoftAssert();
         soft.assertEquals(actualDate, expectedDate, "Date header value does not match the expected");
         soft.assertEquals(actualContentType, "application/json; charset=utf-8", "Content Header type value does not match the expected");

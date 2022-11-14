@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Welcome8Element"
+  },
+  "definitions": {
+    "Welcome8Element": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "postId": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "body",
+        "email",
+        "id",
+        "name",
+        "postId"
+      ],
+      "title": "Welcome8Element"
+    }
+  }
+}

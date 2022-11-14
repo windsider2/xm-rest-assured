@@ -1,3 +1,4 @@
 ---
 base_url: 'https://jsonplaceholder.typicode.com'
 post_path: '/posts'
+comments_path: '/comments'
