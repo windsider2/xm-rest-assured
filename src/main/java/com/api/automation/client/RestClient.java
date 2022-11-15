@@ -19,6 +19,6 @@ public class RestClient {
     }
 
     public RequestSpecification buildRequest() {
-        return RestAssured.given();
+        return RestAssured.given().log().all();
     }
 }

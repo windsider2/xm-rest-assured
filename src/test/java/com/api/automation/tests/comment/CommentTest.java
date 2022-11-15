@@ -1,6 +1,6 @@
-package com.api.automation.comments;
+package com.api.automation.tests.comment;
 
-import com.api.automation.BaseTest;
+import com.api.automation.tests.BaseTest;
 import com.api.automation.dataprovider.CommentDataProvider;
 import com.api.automation.model.Comment;
 import io.restassured.http.Headers;

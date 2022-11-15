@@ -3,7 +3,7 @@
 <suite name="Comment" verbose="1" parallel="methods" thread-count="5">
     <test name="Comment" >
         <classes>
-            <class name="com.api.automation.comments.CommentTest" />
+            <class name="com.api.automation.tests.comment.CommentTest" />
         </classes>
     </test>
 </suite>

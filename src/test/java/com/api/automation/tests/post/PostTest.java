@@ -1,6 +1,6 @@
-package com.api.automation.post;
+package com.api.automation.tests.post;
 
-import com.api.automation.BaseTest;
+import com.api.automation.tests.BaseTest;
 import com.api.automation.dataprovider.PostDataProvider;
 import com.api.automation.model.Post;
 import io.restassured.http.Headers;

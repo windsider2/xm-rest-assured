@@ -1,4 +1,4 @@
-package com.api.automation;
+package com.api.automation.tests;
 
 import com.api.automation.client.RestClient;
 import org.springframework.beans.factory.annotation.Autowired;

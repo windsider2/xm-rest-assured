@@ -3,7 +3,7 @@
 <suite name="Post" verbose="1" parallel="methods" thread-count="5">
     <test name="Post" >
         <classes>
-            <class name="com.api.automation.post.PostTest" />
+            <class name="com.api.automation.tests.post.PostTest" />
         </classes>
     </test>
 </suite>
