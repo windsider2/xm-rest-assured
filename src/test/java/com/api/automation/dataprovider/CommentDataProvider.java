@@ -1,8 +1,8 @@
 package com.api.automation.dataprovider;
 
-import com.api.automation.model.Comment;
+import static org.apache.http.HttpStatus.SC_OK;
 
-import static org.apache.http.HttpStatus.*;
+import com.api.automation.model.Comment;
 
 public class CommentDataProvider {
     @org.testng.annotations.DataProvider(name = "commentProvider")

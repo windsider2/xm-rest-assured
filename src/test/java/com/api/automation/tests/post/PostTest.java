@@ -1,25 +1,26 @@
 package com.api.automation.tests.post;
 
-import com.api.automation.tests.BaseTest;
+import static com.api.automation.utils.ConfigSetter.getConfigValue;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.lessThan;
+
 import com.api.automation.dataprovider.PostDataProvider;
 import com.api.automation.model.Post;
+import com.api.automation.tests.BaseTest;
 import io.restassured.http.Headers;
 import io.restassured.response.ValidatableResponse;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.stream.IntStream;
-
-import static com.api.automation.utils.ConfigSetter.*;
-import static io.restassured.module.jsv.JsonSchemaValidator.*;
-import static java.time.format.DateTimeFormatter.*;
-import static java.time.temporal.ChronoUnit.*;
-import static org.apache.http.HttpStatus.*;
-import static org.hamcrest.Matchers.*;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class PostTest extends BaseTest {
     private static final String PATH_TO_POSTS = getConfigValue("post_path").toString();

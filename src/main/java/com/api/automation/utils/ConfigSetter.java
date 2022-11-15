@@ -1,9 +1,8 @@
 package com.api.automation.utils;
 
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.InputStream;
 import java.util.Map;
+import org.yaml.snakeyaml.Yaml;
 
 public class ConfigSetter {
     private final static Map<String, Object> CONFIG_VALUES;

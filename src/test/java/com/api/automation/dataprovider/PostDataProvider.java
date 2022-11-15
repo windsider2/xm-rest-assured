@@ -1,12 +1,15 @@
 package com.api.automation.dataprovider;
 
+import static java.lang.String.format;
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
+import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+import static org.apache.http.HttpStatus.SC_OK;
+
 import com.api.automation.model.Post;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import java.io.IOException;
-
-import static java.lang.String.*;
-import static org.apache.http.HttpStatus.*;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class PostDataProvider {
     @org.testng.annotations.DataProvider(name = "postProvider")
