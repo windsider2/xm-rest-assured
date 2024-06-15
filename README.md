@@ -1,41 +1,23 @@
-Description of the task
+Automation testing task #2 (API)
 
-Create a test suite for testing the following methods from this REST service using Java: https://jsonplaceholder.typicode.com
+Resource: https://swapi.dev/
 
-GET
-/posts
+Endpoints examples:
 
-GET
-/posts/ {id}
+ find in site tutorial
 
-GET
-/posts/ {id} /comments
+Tools: Java AND Rest Assured
 
-GET
-/comments?postId= {id}
+Use Cases 1:
+1. Find the film with latest release date.
+2. Using previous response (1) find the tallest person among the characters that
+were part of that film.
+3. Find the tallest person ever played in any Star Wars film.
+Use Cases 2:
+1. Create contract test (Json schema validation) for /people API.
 
-POST
-/posts
+How to Run tests
 
-PUT
-/posts/ {id}
+After cloning the project execute the command 'mvn test -DsuiteXmlFile="testng.xml"'
 
-PATCH
-/posts/ {id}
-
-DELETE
-/posts/ {id}
-
-ACCEPTANCE CRITERIA
-
-Tests should be built with layered architecture (core, domain, tests levels)
-
-Tests should be created using either Rest Assured or Spring Rest Template or Apache Http Client.
-
-Tests have to include critical path tests validations both positive and negative (define a set of tests on your own).
-
-Implemented tests should be readable with needed comments.
-
-Tests must be implemented so that they could be launched in parallel.
-
-Naming and Code Conventions should be followed – i.e. https://google.github.io/styleguide/javaguide.html or any other.
+To view the test report, navigate to the following directory: target/surefire-reports/html/ and open the file index.html in a browser of your choice

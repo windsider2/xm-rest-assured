@@ -56,7 +56,7 @@ public class FilmTest extends BaseTest {
     public void verifyTheTallestCharacterFromFilmWithLatestRealiseDateTest() {
         //retrieving characters' urls from the film with the latest realise
         List<String> charactersUrls = filmsData.stream().filter(mp -> titleOfLatestRealiseFilm.equals(mp.get("title")))
-                .map(mp -> (mp.get("characters")))
+                .map(mp -> mp.get("characters"))
                 .filter(List.class::isInstance)
                 .flatMap(charList -> ((List<String>) charList).stream())
                 .collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class FilmTest extends BaseTest {
     public void tallestCharacterTest() {
         //retrieving characters' urls from the film with the latest realise
         List<String> charactersUrls = filmsData.stream()
-                .map(mp -> (mp.get("characters")))
+                .map(mp -> mp.get("characters"))
                 .filter(List.class::isInstance)
                 .flatMap(charList -> ((List<String>) charList).stream())
                 .collect(Collectors.toList());
@@ -93,7 +93,7 @@ public class FilmTest extends BaseTest {
     }
 
     @Test
-    public void verifyCommentsSchemaTest() {
+    public void verifyPeopleSchemaTest() {
         getRequestSpecification()
                 .get("/people")
                 .then()

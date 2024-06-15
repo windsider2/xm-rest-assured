@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
-<suite name="Film" verbose="1" parallel="methods" thread-count="5">
+<suite name="Film" verbose="1" parallel="methods" thread-count="4">
     <test name="Film" >
         <classes>
             <class name="com.api.automation.tests.film.FilmTest" />
