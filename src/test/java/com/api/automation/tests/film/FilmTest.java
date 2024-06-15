@@ -39,7 +39,7 @@ public class FilmTest extends BaseTest {
                 .map(mp -> Map.of("title", mp.get("title").toString(), "releaseDate", mp.get("release_date").toString()))
                 .collect(Collectors.toList());
 
-        //looking for the film with latest realise data
+        //looking for the film with the latest realise data
         Map<String, String> filmWithLatestRelease = realiseDates.stream()
                 .max(Comparator.comparing(mp -> parseDate(mp.get("releaseDate"))))
                 .orElseThrow(() -> new RuntimeException("No latest realise data found"));
@@ -55,7 +55,8 @@ public class FilmTest extends BaseTest {
     @Test(dependsOnMethods = "verifyFilmWithLatestRealiseDateTest")
     public void verifyTheTallestCharacterFromFilmWithLatestRealiseDateTest() {
         //retrieving characters' urls from the film with the latest realise
-        List<String> charactersUrls = filmsData.stream().filter(mp -> titleOfLatestRealiseFilm.equals(mp.get("title")))
+        List<String> charactersUrls = filmsData.stream()
+                .filter(mp -> titleOfLatestRealiseFilm.equals(mp.get("title")))
                 .map(mp -> mp.get("characters"))
                 .filter(List.class::isInstance)
                 .flatMap(charList -> ((List<String>) charList).stream())
@@ -73,7 +74,7 @@ public class FilmTest extends BaseTest {
 
     @Test
     public void tallestCharacterTest() {
-        //retrieving characters' urls from the film with the latest realise
+        //retrieving characters' urls from the all films
         List<String> charactersUrls = filmsData.stream()
                 .map(mp -> mp.get("characters"))
                 .filter(List.class::isInstance)
