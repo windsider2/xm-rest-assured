@@ -1,7 +1,0 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="suite of suites">
-    <suite-files>
-        <suite-file path="testng-post.xml"/>
-        <suite-file path="testng-comment.xml"/>
-    </suite-files>
-</suite>

@@ -15,10 +15,7 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests {
     @Value("${base_url}")
     private String baseUrl;
 
-    @Value("${post_path}")
-    private String pathToPosts;
-
     public RequestSpecification getRequestSpecification() {
-        return restClient.getClient().baseUri(baseUrl).basePath(pathToPosts).log().all();
+        return restClient.getClient().baseUri(baseUrl).log().all();
     }
 }
